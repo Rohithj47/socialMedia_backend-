@@ -5,9 +5,9 @@ const dotenv = require('dotenv')
 
 dotenv.config()
 
+const app = express()
 const PORT = 3000 || process.env.PORT
 
-const app = express()
 
 
 mongoose.connect(
