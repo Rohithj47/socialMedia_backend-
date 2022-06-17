@@ -7,7 +7,7 @@ const schema = new mongoose.Schema({
         unique: true,
         min: 3
     },
-    emai: {
+    email: {
         type: String,
         required: true,
         max: 50,
