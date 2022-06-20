@@ -1,7 +1,7 @@
 const router = require("express").Router()
+const authcontroller = require('../controllers/userController')
 
-router.get('/', (req, res) =>{
-    res.send("Hello")
-})
+// Update User 
+router.put('/:id', authcontroller.updateUser)
 
 module.exports = router

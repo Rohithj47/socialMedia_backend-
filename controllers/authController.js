@@ -34,7 +34,11 @@ module.exports.register = [
 ]
 
 module.exports.login = [
-    body(["email", "password"], "Pls enter valid email & password")
+    body("email", "Pls enter valid email & password")
+        .trim()
+        .isLength({min:3})
+        .escape(),
+    body("password", "Pls enter valid email & password")
         .trim()
         .isLength({min:3})
         .escape(),
