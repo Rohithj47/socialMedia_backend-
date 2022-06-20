@@ -20,11 +20,8 @@ module.exports.register = [
 
                 return res.status(401).json({ error: err})
             }
-            User.create({ username: req.body.username,
-                email: req.body.email,
-                password: hash  
-            },(err, user) =>{
-                if (!user) { return res.status(401).json(err) }
+            User.create(req.body ,(err, user) =>{
+                if (!user) { return res.status(500).json(err) }
                 return res.status(201).json(user)
                 
             }
