@@ -63,3 +63,15 @@ module.exports.timelinePosts = [
     })
   }
 ]
+
+module.exports.profilePosts = [
+  (req,res) => {
+    User.find({ username: req.params.username},(err, user)=>{
+      if(err){ return res.status(500).json(err) }
+      Post.find({userId: user[0]._id }, (err, posts)=>{
+        if(err) { return res.status(500).json(err) }
+        res.status(200).json(posts)
+      })
+    })
+  }
+]

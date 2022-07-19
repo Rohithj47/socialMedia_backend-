@@ -103,10 +103,17 @@ module.exports.unfollowUser = [
 
 
 //get a user
- module.exports.getUser = (req, res) => {
-    User.findById(req.params.id, (err,user)=> {
-        if (err || !user) { return res.status(500).json("User not found") }
-        const { password, updatedAt, ...other } = user._doc;
-         res.status(200).json(other);
-    })
+ module.exports.getUser = async (req, res) => {
+    console.log(req.query.userId)
+    const userId = req.query.userId;
+    const username = req.query.username;
+    try {
+      const user = userId
+        ? await User.findById(userId)
+        : await User.findOne({ username: username });
+      const { password, updatedAt, ...other } = user._doc;
+      res.status(200).json(other);
+    } catch (err) {
+      res.status(500).json(err);
+    }
   };
