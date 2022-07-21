@@ -45,6 +45,25 @@ module.exports.deletePost = (req, res) => {
     });
 }
 
+// module.exports.timelinePosts = [
+//   (req,res) => {
+//     returnPosts = []
+//     User.findById(req.params.userId, async (err, user) => {
+//       if(err) { return res.status(500).json(err)}
+//       Post.find({userId: user._id }, async (err, posts) => {
+//         if(err) { return res.status(500).json(err) }
+//         const friendPosts = await Promise.all(
+//           user.following.map((friendId) => {
+//             return Post.find({ userId: friendId });
+//           })
+//         );
+//         returnPosts = posts.concat(friendPosts[0])
+//         return res.status(200).json(returnPosts)
+//       })
+//     })
+//   }
+// ]
+
 module.exports.timelinePosts = [
   (req,res) => {
     returnPosts = []
@@ -57,12 +76,15 @@ module.exports.timelinePosts = [
             return Post.find({ userId: friendId });
           })
         );
-        returnPosts = posts.concat(friendPosts[0])
+        returnPosts = posts.concat(...friendPosts)
         return res.status(200).json(returnPosts)
       })
     })
   }
 ]
+
+
+
 
 module.exports.profilePosts = [
   (req,res) => {

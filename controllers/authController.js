@@ -17,9 +17,9 @@ module.exports.register = [
 
         bcrypt.hash(req.body.password, 10, (err, hash)=>{
             if(!hash){
-
                 return res.status(401).json({ error: err})
             }
+            req.body.password = hash
             User.create(req.body ,(err, user) =>{
                 if (!user) { return res.status(500).json(err) }
                 return res.status(201).json(user)
