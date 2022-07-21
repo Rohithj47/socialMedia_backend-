@@ -7,6 +7,9 @@ const dotenv = require('dotenv')
 const userRoute = require('./routes/users')
 const authRoute = require('./routes/auth')
 const postRoute = require('./routes/post')
+const multer = require("multer")
+const path = require('path')
+const cors = require('cors')
 
 dotenv.config()
 
@@ -19,9 +22,36 @@ mongoose.connect(
     }
 )
 
+//Enable CORS 
+app.use(cors());
+
+
 app.use(express.json())
 app.use(helmet())
+app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
 app.use(morgan('common'))
+console.log(path.join(__dirname + 'public/images'))
+app.use('/images',express.static(path.join(__dirname + '/public/images')));
+
+const storage = multer.diskStorage({
+    destination: (req,file,cb) => {
+        cb(null, "public/images")
+    },
+    filename: (req,file,cb) => {
+        if (req.body.name){
+            cb(null, req.body.name)
+        }
+    }
+})
+
+const upload = multer({storage})
+app.post('/api/upload',upload.single("file"), (req,res) => {
+    try{
+        res.status(200).json("File Uploaded successfully")
+    }catch(err){
+        console.log(err)
+    }
+})
 
 app.use('/api/users', userRoute)
 app.use('/api/auth', authRoute)
