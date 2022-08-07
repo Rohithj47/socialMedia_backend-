@@ -57,14 +57,12 @@ app.use('/api/users', userRoute)
 app.use('/api/auth', authRoute)
 app.use('/api/post', postRoute)
 
-if(process.env.NODE_ENV === 'production') {
-    app.use(express.static(path.join(__dirname, 'socialmediafrontend', 'build')));
-  
+if (process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'staging') {
+    app.use(express.static('socialmediafrontend/build'));
     app.get('*', (req, res) => {
-      res.sendFile(path.join(__dirname, 'socialmediafrontend', 'build', 'index.html'))
+    res.sendFile(path.join(__dirname + '/socialmediafrontend/build/index.html'));
     });
-  
-  }
+}
 
 app.listen(PORT, () => {
     console.log(`listening on port ${PORT}`)
