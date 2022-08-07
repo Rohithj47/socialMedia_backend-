@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "heroku-postbuild": "cd socialmediafrontend && npm install && npm run build",
+    "heroku-postbuild": "cd app && cd socialmediafrontend && npm install && npm run build",
     "devstart": "nodemon index.js"
   },
   "engines": {
