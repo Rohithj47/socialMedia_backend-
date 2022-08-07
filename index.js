@@ -60,7 +60,7 @@ app.use('/api/post', postRoute)
 if (process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'staging') {
     app.use(express.static('socialmediafrontend/build'));
     app.get('*', (req, res) => {
-        const index = path.join(__dirname,'index.html');
+        const index = path.join(__dirname,'socialmediafrontend', 'build', 'index.html');
         res.sendFile(index);
     });
 }
